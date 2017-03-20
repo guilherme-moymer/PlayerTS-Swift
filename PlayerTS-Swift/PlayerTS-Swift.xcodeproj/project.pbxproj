@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D5976971E7C60A20081F456 /* garotinha.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D5976961E7C60A20081F456 /* garotinha.mp4 */; };
 		7D5976991E7C611D0081F456 /* FFmpegWrapperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5976981E7C611D0081F456 /* FFmpegWrapperManager.swift */; };
 		7D59769B1E7C6B950081F456 /* Converter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7D79DA211E7C5FC000599924 /* Converter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7D5976A21E7C7EE10081F456 /* LocalServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5976A11E7C7EE10081F456 /* LocalServerManager.swift */; };
@@ -60,7 +59,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7D5976961E7C60A20081F456 /* garotinha.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = garotinha.mp4; path = ../../../../Downloads/garotinha.mp4; sourceTree = "<group>"; };
 		7D5976981E7C611D0081F456 /* FFmpegWrapperManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegWrapperManager.swift; sourceTree = "<group>"; };
 		7D5976A11E7C7EE10081F456 /* LocalServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalServerManager.swift; sourceTree = "<group>"; };
 		7D5CF8AD1E7ADA690082E2F6 /* PlayerTS-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerTS-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,7 +128,6 @@
 				7D5CF8B71E7ADA690082E2F6 /* Assets.xcassets */,
 				7D5CF8B91E7ADA690082E2F6 /* LaunchScreen.storyboard */,
 				7D5CF8BC1E7ADA690082E2F6 /* Info.plist */,
-				7D5976961E7C60A20081F456 /* garotinha.mp4 */,
 			);
 			path = "PlayerTS-Swift";
 			sourceTree = "<group>";
@@ -234,7 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D5CF8BB1E7ADA690082E2F6 /* LaunchScreen.storyboard in Resources */,
-				7D5976971E7C60A20081F456 /* garotinha.mp4 in Resources */,
 				7D5CF8B81E7ADA690082E2F6 /* Assets.xcassets in Resources */,
 				7D5CF8B61E7ADA690082E2F6 /* Main.storyboard in Resources */,
 			);

@@ -26,44 +26,70 @@ class LocalServerManager: NSObject {
             try self.server.start()
          
             server.GET["/moymer/gui-garotinha/:file"] = { r in
-                
-                print("Path to: \(r.path)")
-                  print("Params: \(r.params[":file"])")
                 let file : String = r.params[":file"]!
                 let url = "https://s3-sa-east-1.amazonaws.com/moymer/\(file)"
-
-              
-               return  HttpResponse.raw(200, "OK", nil, {
                 
-                let writer = $0
-                
-                Alamofire.request(url, method: .get).stream(closure: { (data) in
-                    
-                        try? writer.write(data)
+                let info = self.getDataFromCache(url: url, filename: file)
+                return HttpResponse.raw(200, "ok", info.0, {  writer in
+                    try? writer.write(info.1)
                 })
- 
-                     /*Alamofire.request(url, method: .get).responseData { (response) in
-                     
-                      let data = response.result.value
-                        
-                        try? writer.write(data!)
-                    }*/
-                })
-     
-                
-             // return .movedPermanently("https://s3-sa-east-1.amazonaws.com/moymer/garotinhaDance_index.m3u8")
             }
-            
-//            server.GET["/hello"] = { .ok(.text("You asked for \($0)")) }
-            
+
+        
         } catch {
             print("Server start error: \(error)")
         }
     }
     
-    func share(filePath: String) {
+    func getData(url: String) -> ([String:String], Data)
+    {
+        var h : [String:String]?
+        var d : Data?
+        let semaphore = DispatchSemaphore(value: 0)
+        Alamofire.request(url, method: .get).responseData { (r) in
+            h = r.response?.allHeaderFields as? [String : String]
+            d = r.data!
+            semaphore.signal()
+            
+        }
+        semaphore.wait()
         
+        return (h!,d!)
     }
+    
+    
+    func getDataFromCache(url: String, filename: String) -> ([String:String], Data)
+    {
+        var h : [String:String]?
+        var d : Data?
+        let semaphore = DispatchSemaphore(value: 0)
+        let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
+     
+        if FileManager.default.fileExists(atPath: filePath.path)
+        {
+            //get from local dir
+            let data: Data? = try? Data(contentsOf: filePath)
+            h = [:] // ["Content-Length": String(describing: data?.count)]
+            d = data!
+        } else  {
+            //get from the cloud
+            Alamofire.download(url, method: .get, to: { (tempUrl, tempResponse) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
+             return (filePath,[])
+            }).responseData { (downloadResponse) in
+                let destUrl = downloadResponse.destinationURL
+                let data: Data? = try? Data(contentsOf: destUrl!)
+                h = [:] // ["Content-Length": String(describing: data?.count)]
+                d = data!
+
+                semaphore.signal()
+            }
+            semaphore.wait()
+        }
+        
+        return (h!,d!)
+    }
+
+    
     
     func printServer() {
         
